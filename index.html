@@ -11,8 +11,97 @@
 
     <!-- custom css file link  -->
     <link rel="stylesheet" href="css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore-compat.js"></script>
 
 </head>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+
+    // Tu configuración de Firebase
+    const firebaseConfig = {
+        apiKey: "AIzaSyDq9JtJS8_AAeMYP1PRbY9S--xS8W4tixI",
+        authDomain: "johana-a03f9.firebaseapp.com",
+        projectId: "johana-a03f9",
+        storageBucket: "johana-a03f9.appspot.com",
+        messagingSenderId: "994438034104",
+        appId: "1:994438034104:web:3b0c921370144a9e3eba4d"
+    };
+
+    // Inicializar Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    // Función para agregar un usuario a Firestore
+    async function agregarUsuario() {
+        // Obtener datos del formulario
+        const firstName = document.getElementById('nombre').value;
+        const lastName = document.getElementById('apellido').value;
+        const cedula = document.getElementById('cedula').value;
+        const mesa = document.getElementById('mesa').value;
+        const nompedido = document.getElementById('nompedido').value;
+        let precio; // Declarar la variable precio
+
+// Lógica condicional para establecer el precio
+switch (nompedido) {
+        case "Desayuno al Apuro":
+            precio = "3.50";
+            break;
+        case "Desayuno Tranquilo":
+            precio = "4";
+            break;
+        case "Desayuno PIC&NIC":
+            precio = "5";
+            break;
+            case "Sandwich Pollo":
+            precio = "3.50";
+            break;
+            case "Sandwich Tradicional":
+            precio = "3";
+            break;
+            case "Hamburguesa Campestre":
+            precio = "4";
+            break;
+            case "Hamburguesa Pic & Nic":
+            precio = "6";
+            break;
+            case "Crepes Al Funghi":
+            precio = "5.25";
+            break;
+            case "Crepes Lomito":
+            precio = "5.75";
+            break;
+        // Agregar más casos según sea necesario
+        default:
+            precio = "valor predeterminado o algo más";
+    }
+       
+            
+        
+        //const precio = document.getElementById('precio1').value;
+
+        try {
+            const docRef = await addDoc(collection(db, "Pedido"), {
+                Apellido: lastName,
+                Cedula: cedula,
+                Mesa: mesa,
+                Nombre: firstName,
+                Nombrepedido: nompedido,
+                Precio: precio
+            });
+            console.log("Documento escrito con ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error al agregar el documento: ", e);
+        }
+    }
+
+    // Agregar evento click al botón por ID
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('btnAgregarUsuario');
+        btn.addEventListener('click', agregarUsuario);
+    });
+</script>
 <body>
     
 <!-- header section starts  -->
@@ -66,7 +155,7 @@
             <h3>Desayuno al Apuro</h3>
             <h4> Café o leche, jugo, tostada de queso y huevo revuelto </h4>
             <div class="price">$3.50 </div>
-            <a href="#" class="btn">Ordenar</a>
+            <a href="#contact" class="btn">Ordenar</a>
         </div>
 
         <div class="box">
@@ -74,14 +163,14 @@
             <h3>Desayuno Tranquilo</h3>
             <h4> Café o leche, tostada mixta, huevo pericos, tocino y jugo</h4>
             <div class="price">$4.00 </div>
-            <a href="#" class="btn">Ordenar</a>
+            <a href="#contact" class="btn">Ordenar</a>
         </div>
 
         <div class="box">
             <h3>Desayuno PIC&NIC</h3>
             <h4>Café o leche, tostada mixta, huevo revuelto, tocino, jugo y ensalada de fruta</h4>
             <div class="price">$5.00 </div>
-            <a href="#" class="btn">Ordenar</a>
+            <a href="#contact" class="btn">Ordenar</a>
         </div>
 
         <div class="box">
@@ -89,7 +178,7 @@
             <h3>Desayuno Fit</h3>
             <h4>Yogurt orgánico acompañado de granola, ensalada de frutas, huevos pericos, wrap, jamón con queso y té.</h4>
             <div class="price">$6.00</div>
-            <a href="#" class="btn">Ordenar</a>
+            <a href="#contact" class="btn">Ordenar</a>
         </div>
     </div>
 </section>
@@ -103,7 +192,7 @@
                 <h3>Pollo</h3>
                 <h4> Pan tornillo, pollo mechado con mayonesa, lechuga, tomate y papas chips artesanales. </h4>
                 <div class="price">$3,50 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
             <div class="box">
@@ -111,7 +200,7 @@
                 <h3>Tradicional</h3>
                 <h4> Pan tornilllo, queso, jamón, lechuga, mayonesa, tomate, papas chips artesanales.</h4>
                 <div class="price">$3,00 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
     </div>
@@ -126,7 +215,7 @@
                 <h3>Club</h3>
                 <h4> Pan de molde, pollo, jamón, queso, tocino, huevo, pimientos, cebolla, lechuga, tomate, mayonesa y papas fritas. </h4>
                 <div class="price">$4,00 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
             <div class="box">
@@ -134,7 +223,7 @@
                 <h3>Lomito</h3>
                 <h4>Pan tornillo, lomito salteado, jamón, queso, lechuga, cebolla, tomate y papas fritas. </h4>
                 <div class="price">$5,00 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
         </div>
@@ -149,7 +238,7 @@
                 <h3>Campestre</h3>
                 <h4> Pan de hambruguesa, carne, queso cheddar, lechuga, cebolla, tomate y papas o yucas fritas. </h4>
                 <div class="price">$4,00 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
             <div class="box">
@@ -157,7 +246,7 @@
                 <h3>Pic & Nic</h3>
                 <h4>Pan de hamburguesa, camarón, tocino lechuga, cebolla, tomate y papas o yucas fritas.</h4>
                 <div class="price">$6,00 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
         </div>
@@ -172,14 +261,14 @@
                 <h3>Pollo</h3>
                 <h4>Lechuga crespa, tomate, pimientos, cebolla, pollo y aderezo de la casa.</h4>
                 <div class="price">$4,00 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
             <div class="box">
                 <h3>Ensalada Sal y Dulce</h3>
                 <h4>Lechuga crespa, queso mozzarella, jamón, tomate, cebolla, fresa y aderezo de la casa.</h4>
                 <div class="price">$3,75 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="box">
@@ -187,7 +276,7 @@
                 <h3>PIC & NIC</h3>
                 <h4>Lechuga crespa, tomate, cebolla, aguacate, camarón y adrezo de la casa.</h4>
                 <div class="price">$5,50 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
         </div>
 </section>
@@ -200,14 +289,14 @@
                 <h3>Al Funghi</h3>
                 <h4>Pollo salteado bañado en salsa de champiñones, acompañado de papas fritas o ensalada.</h4>
                 <div class="price">$5,25 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="box">
                 <h3>Lomito</h3>
                 <h4>Lomito salteado bañado en salsa de champiñones, acompañado de papas fritas o ensalada.</h4>
                 <div class="price">$5,75 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
         </div>
 </section>
@@ -221,14 +310,14 @@
                 <h3>Nutella Crep</h3>
                 <h4>Nutella o manjar de leche, fresa y crema.</h4>
                 <div class="price">$3,75 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
     
             <div class="box">
                 <h3>Mix Crep</h3>
                 <h4>Nutella o manjar de leche, fresa, banano, helado y crema</h4>
                 <div class="price">$4,25 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="box">
@@ -236,7 +325,7 @@
                 <h3>Oreo Crep</h3>
                 <h4>Nutella o manjar de leche, fresa, galletas oreo, helado y crema.</h4>
                 <div class="price">$4,75 </div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
         </div>
 </section>
@@ -259,19 +348,19 @@
             <div class="comida">
                 <h2>Yucas fritas</h2>
                 <div class="precio">$2,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Papi Carne</h2>
                 <div class="precio">$2,75</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Papi Casera</h2>
                 <div class="precio">$3,25</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
         </div>
 
@@ -279,27 +368,27 @@
             <div class="comida">
                 <h2>Nachos con guacamole</h2>
                 <div class="precio">$4,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Quesadillas</h2>
                 <div class="precio">$4,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Picaditas</h2>
                 <p>Lomo de res, camarón, pollo, papas, ensalada y salsas</p>
                 <div class="precio">$11,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Burrito Mixto</h2>
                 <p>Lomo de res, pollo a la plancha, lechuga, guacamole y camarón</p>
                 <div class="precio">$7,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
         </div>
     </div>
@@ -316,19 +405,19 @@
             <div class="comida">
                 <h2>Cheesecake de maracuyá</h2>
                 <div class="precio">$3,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Cheesecake de fresa</h2>
                 <div class="precio">$3,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Cheesecake de oreo</h2>
                 <div class="precio">$3,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
 </section>
@@ -344,46 +433,46 @@
             <div class="comida">
                 <h2>Copa de vino</h2>
                 <div class="precio">$4,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Michelada clásica</h2>
                 <div class="precio">$4,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Michelada (Maracuyá)</h2>
                 <div class="precio">$4,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Arco iris</h2>
                 <p>Vodka, licor de menta y granadina</p>
                 <div class="precio">$5,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Pink</h2>
                 <p>Baileys, ron, jugo de fresa</p>
                 <div class="precio">$5,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Mojito</h2>
                 <div class="precio">$5,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Fresa picosa</h2>
                 <p>Tequila, fresa, ají</p>
                 <div class="precio">$5,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 </section>
 
@@ -398,43 +487,43 @@
             <div class="comida">
                 <h2>Espresso</h2>
                 <div class="precio">$1,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Espresso doble</h2>
                 <div class="precio">$1,30</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Café americano</h2>
                 <div class="precio">$4,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Capuccino</h2>
                 <div class="precio">$2,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Mocaccino</h2>
                 <div class="precio">$2,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Té (infusión)</h2>
                 <div class="precio">$1,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Té (Frutas deshidratadas)</h2>
                 <div class="precio">$2,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 </section>
 
@@ -449,49 +538,49 @@
             <div class="comida">
                 <h2>Pic Nic mocca</h2>
                 <div class="precio">$3,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Smoothie sencillo</h2>
                 <div class="precio">$3,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Strawberry frappé</h2>
                 <div class="precio">$4,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Milkshake</h2>
                 <div class="precio">$3,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Jugos de frutas</h2>
                 <div class="precio">$2,00</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Limonada de fresa</h2>
                 <div class="precio">$2,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Batidos</h2>
                 <div class="precio">$2,50</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 
             <div class="comida">
                 <h2>Aguas</h2>
                 <div class="precio">$0,80</div>
-                <a href="#" class="btn">Ordenar</a>
+                <a href="#contact" class="btn">Ordenar</a>
             </div>
 </section>
 <!-- contact section starts  -->
@@ -504,33 +593,66 @@
 
         <iframe class="map" src="https://www.google.com/maps/embed?pb=!1m21!1m12!1m3!1d3511.300898952971!2d-78.6435659220329!3d-1.2493943268409813!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!4m6!3e6!4m0!4m3!3m2!1d-1.2481096999999999!2d-78.64196129999999!5e1!3m2!1ses!2sec!4v1697934842680!5m2!1ses!2sec" allowfullscreen="" loading="lazy"></iframe>
     
-        <form action="">
+        <form class="hh" >
             <h3>Datos del usuario:</h3>
             <div class="inputBox">
                 <span class="fas fa-user"></span>
-                <input type="text" placeholder="Nombre">
+                <input type="text" placeholder="Nombre" id="nombre">
             </div>
             <div class="inputBox">
                 <span class="fas fa-user"></span>
-                <input type="text" placeholder="Cédula o RUC">
+                <input type="text" placeholder="Apellido" id="apellido">
             </div>
             <div class="inputBox">
                 <span class="fas fa-user"></span>
-                <input type="text" placeholder="Mesa">
+                <input type="text" placeholder="Cedula" id="cedula">
             </div>
             <div class="inputBox">
-                <span class="fas fa-envelope"></span>
-                <input type="email" placeholder="email">
+                <span class="fas fa-user"></span>
+                <label for="mesa">Precio:</label>
+                <select id="mesa">
+                    
+                    <option value="Mesa 1">Mesa 1</option>
+                    <option value="Mesa 2">Mesa 2</option>
+                    <option value="Mesa 3">Mesa 3</option>
+ 
+                    <!-- Agrega más opciones según sea necesario -->
+                </select>
             </div>
             <div class="inputBox">
-                <span class="fas fa-phone"></span>
-                <input type="number" placeholder="número">
+                <span class="fas fa-user"></span>
+                <label for="precio">Precio:</label>
+                <select id="nompedido">
+                    <option value="Desayuno al Apuro">Desayuno al Apuro</option>
+                    <option value="Desayuno Tranquilo">Desayuno Tranquilo</option>
+                    <option value="Desayuno PIC&NIC">Desayuno PIC&NIC</option>
+                    <option value="Sandwich Pollo">Sandwich Pollo</option>
+                    <option value="Sandwich Tradicional">Sandwich Tradicional</option>
+                    <option value="Hamburguesa Campestre">Hamburguesa Campestre</option>
+                    <option value="Hamburguesa Pic & Nic">Hamburguesa Pic & Nic</option>
+                    <option value="Crepes Al Funghi">Crepes Al Funghi</option>
+                    <option value="Crepes Lomito">Crepes Lomito</option>
+                    <!-- Agrega más opciones según sea necesario -->
+                </select>
             </div>
-            <input type="submit" value="finalizar" class="btn">
+            <!-- <div class="inputBox">
+                <span class="fas fa-user"></span>
+                <label for="precio">Precio:</label>
+                <select id="precio1">
+                    <option value="10">10</option>
+                    <option value="20">20</option>
+                    <option value="30">30</option>
+                    
+                </select>
+            </div> -->
+            
+
         </form>
 
     </div>
-
+    <div id="centrado">
+        <button id="btnAgregarUsuario" class="btn">Finalizar Pedido</button>
+    </div>
 </section>
 
 <!-- contact section ends -->

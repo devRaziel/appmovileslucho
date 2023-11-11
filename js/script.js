@@ -1,29 +1,60 @@
 let navbar = document.querySelector('.navbar');
 
-document.querySelector('#menu-btn').onclick = () =>{
-    navbar.classList.toggle('active');
-    searchForm.classList.remove('active');
-    cartItem.classList.remove('active');
+
+// Initialize Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyDq9JtJS8_AAeMYP1PRbY9S--xS8W4tixI",
+    authDomain: "johana-a03f9.firebaseapp.com",
+    projectId: "johana-a03f9",
+    storageBucket: "johana-a03f9.appspot.com",
+    messagingSenderId: "994438034104",
+    appId: "1:994438034104:web:3b0c921370144a9e3eba4d"
+};
+
+firebase.initializeApp(firebaseConfig);
+let db = firebase.Firestore();
+
+const SaverUser = (user) =>{
+    db.collection("usuarios").add({
+        user,
+    })
+
+
+
+
 }
 
-let searchForm = document.querySelector('.search-form');
 
-document.querySelector('#search-btn').onclick = () =>{
-    searchForm.classList.toggle('active');
-    navbar.classList.remove('active');
-    cartItem.classList.remove('active');
-}
+document.getElementById('btnsave').addEventListener('click', function() {
+    alert('Hola');
+ let cedula = "kjkjjj"
+ let cedula1 = "kjkjjj"
+ let cedula2 = "kjkjjj"
+    const user = {
+        cedula,
+        cedula1,
+        cedula2
+    }
+    SaverUser(user);
+});
 
-let cartItem = document.querySelector('.cart-items-container');
+// import { initializeApp } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-app.js";
+// import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.6.0/firebase-firestore.js";
 
-document.querySelector('#cart-btn').onclick = () =>{
-    cartItem.classList.toggle('active');
-    navbar.classList.remove('active');
-    searchForm.classList.remove('active');
-}
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+//     apiKey: "AIzaSyDq9JtJS8_AAeMYP1PRbY9S--xS8W4tixI",
+//     authDomain: "johana-a03f9.firebaseapp.com",
+//     projectId: "johana-a03f9",
+//     storageBucket: "johana-a03f9.appspot.com",
+//     messagingSenderId: "994438034104",
+//     appId: "1:994438034104:web:3b0c921370144a9e3eba4d"
+// };
 
-window.onscroll = () =>{
-    navbar.classList.remove('active');
-    searchForm.classList.remove('active');
-    cartItem.classList.remove('active');
-}
+// // Initialize Firebase
+// const app = initializeApp(firebaseConfig);
+// const db = getFirestore(app);

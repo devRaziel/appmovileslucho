@@ -39,7 +39,12 @@ html::-webkit-scrollbar-thumb{
 body{
     background: var(--bg);
 }
-
+#centrado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+     /* Ajusta la altura al 100% del viewport */
+}
 section{
     padding:2rem 7%;
 }
@@ -369,6 +374,20 @@ h2 {
     color:#fff;
     text-transform: none;
     background:none;
+}
+.contact .row form .inputBox select{
+    width: 100%;
+    padding:2rem;
+    font-size: 1.7rem;
+    color:#fff;
+    text-transform: none;
+    background:none;
+}
+.contact .row form .inputBox select option{
+  
+
+    color: black;
+
 }
 
 /* media queries  */
